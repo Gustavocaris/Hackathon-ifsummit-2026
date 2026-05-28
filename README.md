@@ -8,6 +8,11 @@
 
 O IFSlot centraliza a gestão de recursos, insumos e cronogramas dos laboratórios, automatizando a comunicação entre docentes e técnicos e garantindo rastreabilidade de todo o material consumido — desde a solicitação de reserva até a conclusão da aula prática.
 
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/60a5e674-b791-40c8-901f-b81953fb28a9" width="80%" />
+</div>
+
+
 **Problemas que resolve:**
 - Conflitos de agendamento por falta de visibilidade de disponibilidade
 - Desabastecimento de insumos por controle manual desvinculado das reservas
@@ -325,3 +330,31 @@ hackathon-frontend-end-03/
 ---
 
 *Para dúvidas ou problemas, abra uma issue no repositório.*
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/60a5e674-b791-40c8-901f-b81953fb28a9" />
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/77946856-c802-4a92-a7b6-7a99f8aa209a" />
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/b5e9a98d-a526-4144-8ff2-83997c5b5a4c" />
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/ef507184-da7d-4d66-b13f-45218c1bf64d" />
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/1808569f-9847-402f-8aef-991911c7ee51" />
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/1808569f-9847-402f-8aef-991911c7ee51" />
+</div>
+
+<div align="center">
+<img src="https://github.com/user-attachments/assets/237bc725-7543-47d7-9cdd-d5641acf46c7" />
+</div>
