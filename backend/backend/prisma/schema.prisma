@@ -1,0 +1,266 @@
+// prisma/schema.prisma
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+// ─────────────────────────────────────────────
+// ENUMS
+// ─────────────────────────────────────────────
+
+enum Role {
+  DOCENTE
+  TECNICO
+  ADMIN
+}
+
+enum LaboratoryType {
+  QUIMICA
+  BIOLOGIA
+}
+
+enum Shift {
+  MANHA
+  TARDE
+}
+
+enum ReservationType {
+  AULA
+  PROJETO
+}
+
+enum ReservationStatus {
+  PENDENTE
+  APROVADA
+  REPROVADA
+  EM_REVISAO
+  CANCELADA
+}
+
+enum WasteType {
+  OSCILANTE
+  SOLVENTES_ORGANICOS
+  METAIS_PESADOS
+  HALOGENADOS
+}
+
+// ─────────────────────────────────────────────
+// USUÁRIO
+// ─────────────────────────────────────────────
+
+model User {
+  id            String   @id @default(uuid())
+  supabaseId    String   @unique
+  nome          String   @map("name")
+  email         String   @unique
+  perfil        Role     @default(DOCENTE) @map("role")
+  criadoEm     DateTime @default(now()) @map("createdAt")
+  atualizadoEm  DateTime @updatedAt @map("updatedAt")
+
+  reservas          Reservation[] @relation("CreatedBy")
+  reservasRevisadas Reservation[] @relation("ReviewedBy")
+  notificacoes      Notification[]
+
+  @@map("users")
+}
+
+
+// ─────────────────────────────────────────────
+// LABORATÓRIO
+// ─────────────────────────────────────────────
+
+model Laboratory {
+  id           String         @id @default(uuid())
+  nome         String         @map("name")
+  tipo         LaboratoryType @map("type")
+  capacidade   Int            @map("capacity")
+  descricao    String?        @map("description")
+  ativo        Boolean        @default(true) @map("isActive")
+  criadoEm    DateTime       @default(now()) @map("createdAt")
+  atualizadoEm DateTime      @updatedAt @map("updatedAt")
+
+  reservas Reservation[]
+
+  @@map("laboratories")
+}
+
+// ─────────────────────────────────────────────
+// RESERVA
+// ─────────────────────────────────────────────
+
+model Reservation {
+  id            String            @id @default(uuid())
+  data          DateTime          @db.Date @map("date")
+  turno         Shift             @map("shift")
+  tipo          ReservationType   @map("type")
+  nomePratica   String            @map("practiceName")
+  disciplina    String            @map("discipline")
+  turma         String            @map("className")
+  status        ReservationStatus @default(PENDENTE)
+  justificativa String?           @map("justification")
+  roteiroPdfUrl String?
+  inicio        String?           @map("start_time")
+  fim           String?           @map("end_time")
+  observacoes   String?           @map("observations")
+  criadoEm     DateTime          @default(now()) @map("createdAt")
+  atualizadoEm  DateTime          @updatedAt @map("updatedAt")
+
+  laboratorio   Laboratory @relation(fields: [laboratorioId], references: [id])
+  laboratorioId String     @map("laboratoryId")
+
+  criadoPor   User   @relation("CreatedBy", fields: [criadoPorId], references: [id])
+  criadoPorId String @map("createdById")
+
+  revisadoPor   User?   @relation("ReviewedBy", fields: [revisadoPorId], references: [id])
+  revisadoPorId String? @map("reviewedById")
+
+  grupos       Group[]
+  reagentes    ReservationReagent[]
+  vidrarias    ReservationGlassware[]
+  equipamentos ReservationEquipment[]
+
+  // RN01: Uma reserva por turno por laboratório
+  @@unique([data, turno, laboratorioId])
+  @@map("reservations")
+}
+
+// ─────────────────────────────────────────────
+// GRUPO
+// ─────────────────────────────────────────────
+
+model Group {
+  id               String @id @default(uuid())
+  nome             String @map("name")
+  quantidadeAlunos Int    @map("studentCount")
+
+  reserva   Reservation @relation(fields: [reservaId], references: [id], onDelete: Cascade)
+  reservaId String      @map("reservationId")
+
+  @@map("groups")
+}
+
+// ─────────────────────────────────────────────
+// REAGENTE
+// ─────────────────────────────────────────────
+
+model Reagent {
+  id           String    @id @default(uuid())
+  nome         String    @map("name")
+  concentracao String?   @map("concentration")
+  unidade      String    @map("unit")
+  estoqueQtd   Float     @default(0) @map("stockQty")
+  classePerigo String?   @map("hazardClass")
+  tipoResiduo  WasteType @map("wasteType")
+  ativo        Boolean   @default(true) @map("isActive")
+  criadoEm    DateTime  @default(now()) @map("createdAt")
+  atualizadoEm DateTime  @updatedAt @map("updatedAt")
+
+  reservas ReservationReagent[]
+
+  @@map("reagents")
+}
+
+model ReservationReagent {
+  id          String @id @default(uuid())
+  qtdPorGrupo Float  @map("qtyPerGroup")
+  qtdTotal    Float  @map("totalQty")
+
+  reserva   Reservation @relation(fields: [reservaId], references: [id], onDelete: Cascade)
+  reservaId String      @map("reservationId")
+
+  reagente   Reagent @relation(fields: [reagenteId], references: [id])
+  reagenteId String  @map("reagentId")
+
+  @@unique([reservaId, reagenteId])
+  @@map("reservation_reagents")
+}
+
+// ─────────────────────────────────────────────
+// VIDRARIA
+// ─────────────────────────────────────────────
+
+model Glassware {
+  id           String   @id @default(uuid())
+  nome         String   @map("name")
+  tipo         String   @map("type")
+  unidade      String   @default("unidade") @map("unit")
+  estoqueQtd   Int      @default(0) @map("stockQty")
+  ativo        Boolean  @default(true) @map("isActive")
+  criadoEm    DateTime @default(now()) @map("createdAt")
+  atualizadoEm DateTime @updatedAt @map("updatedAt")
+
+  reservas ReservationGlassware[]
+
+  @@map("glassware")
+}
+
+model ReservationGlassware {
+  id          String @id @default(uuid())
+  qtdPorGrupo Int    @map("qtyPerGroup")
+  qtdTotal    Int    @map("totalQty")
+
+  reserva   Reservation @relation(fields: [reservaId], references: [id], onDelete: Cascade)
+  reservaId String      @map("reservationId")
+
+  vidraria    Glassware @relation(fields: [vidriariaId], references: [id])
+  vidriariaId String    @map("glasswareId")
+
+  @@unique([reservaId, vidriariaId])
+  @@map("reservation_glassware")
+}
+
+// ─────────────────────────────────────────────
+// EQUIPAMENTO
+// ─────────────────────────────────────────────
+
+model Equipment {
+  id           String   @id @default(uuid())
+  nome         String   @map("name")
+  numeroSerie  String?  @map("serialNumber")
+  estoqueQtd   Int      @default(0) @map("stockQty")
+  ativo        Boolean  @default(true) @map("isActive")
+  criadoEm    DateTime @default(now()) @map("createdAt")
+  atualizadoEm DateTime @updatedAt @map("updatedAt")
+
+  reservas ReservationEquipment[]
+
+  @@map("equipments")
+}
+
+model ReservationEquipment {
+  id         String  @id @default(uuid())
+  quantidade Int     @default(1) @map("qty")
+  observacao String? @map("observation")
+
+  reserva   Reservation @relation(fields: [reservaId], references: [id], onDelete: Cascade)
+  reservaId String      @map("reservationId")
+
+  equipamento   Equipment @relation(fields: [equipamentoId], references: [id])
+  equipamentoId String    @map("equipmentId")
+
+  @@unique([reservaId, equipamentoId])
+  @@map("reservation_equipments")
+}
+
+// ─────────────────────────────────────────────
+// NOTIFICAÇÃO
+// ─────────────────────────────────────────────
+
+model Notification {
+  id           String   @id @default(uuid())
+  usuarioId    String   @map("user_id")
+  mensagem     String
+  tipo         String
+  lida         Boolean  @default(false)
+  criadoEm    DateTime @default(now()) @map("created_at")
+  referenciaId String?  @map("reference_id")
+  usuario      User     @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+
+  @@map("notifications")
+}

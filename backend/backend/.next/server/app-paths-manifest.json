@@ -1,0 +1,8 @@
+{
+  "/page": "app/page.js",
+  "/api/auth/login/route": "app/api/auth/login/route.js",
+  "/api/laboratories/route": "app/api/laboratories/route.js",
+  "/api/reservations/route": "app/api/reservations/route.js",
+  "/api/materials/route": "app/api/materials/route.js",
+  "/api/notifications/route": "app/api/notifications/route.js"
+}

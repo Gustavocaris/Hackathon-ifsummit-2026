@@ -1,0 +1,45 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(node *)",
+      "Bash(DATABASE_URL=\"postgresql://postgres.plmnqrzpqtbyqsnaeait:Bugados1234!@aws-1-us-west-2.pooler.supabase.com:6543/postgres?pgbouncer=true\" DIRECT_URL=\"postgresql://postgres.plmnqrzpqtbyqsnaeait:Bugados1234!@aws-1-us-west-2.pooler.supabase.com:5432/postgres\" node *)",
+      "Bash(DATABASE_URL=\"postgresql://postgres.plmnqrzpqtbyqsnaeait:Bugados1234%21@aws-1-us-west-2.pooler.supabase.com:6543/postgres?pgbouncer=true\" node *)",
+      "Bash(echo \"PID: $!\")",
+      "Bash(lsof -ti:3001)",
+      "Bash(curl -s http://localhost:3001/api/laboratories)",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' http://localhost:3001__TRACKED_VAR__)",
+      "Bash(curl -s http://localhost:3001__TRACKED_VAR__)",
+      "Bash(kill 651500)",
+      "Bash(curl *)",
+      "mcp__supabase__execute_sql",
+      "Bash(python3 -c ' *)",
+      "Bash(pkill -f \"next dev\")",
+      "Bash(xargs kill -9)",
+      "Read(//home/brayan/Downloads/hackathon/**)",
+      "Read(//home/brayan/Downloads/hackathon/backend/**)",
+      "Bash(npx shadcn@latest add card input label badge select textarea table tabs dialog --yes)",
+      "Bash(wget -q -O - http://localhost:3000/login)",
+      "Bash(kill 748614)",
+      "Bash(fuser -k 3000/tcp)",
+      "Bash(lsof -ti:3000)",
+      "Bash(npx playwright *)",
+      "Bash(npx tsc *)",
+      "Bash(echo \"EXIT:$?\")",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\('API UP, resposta:', d.get\\('message','?'\\)\\)\")",
+      "Read(//tmp/**)",
+      "Bash(npm --version)",
+      "Bash(grep -v \"^$\")",
+      "Bash(npx prisma *)",
+      "Bash(./node_modules/.bin/tsc --noEmit)",
+      "Bash(pnpm --version)",
+      "Read(//home/brayan/.local/share/pnpm/**)",
+      "Bash(npm install *)",
+      "Bash(pkill -f \"next-server\")"
+    ]
+  },
+  "enableAllProjectMcpServers": true,
+  "enabledMcpjsonServers": [
+    "supabase"
+  ]
+}

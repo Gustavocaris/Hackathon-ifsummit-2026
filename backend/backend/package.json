@@ -1,0 +1,42 @@
+{
+  "name": "ifslot-backend",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev --port 3001",
+    "build": "next build",
+    "start": "next start --port 3001",
+    "lint": "next lint",
+    "db:generate": "prisma generate",
+    "db:migrate": "prisma migrate dev",
+    "db:push": "prisma db push",
+    "db:studio": "prisma studio",
+    "db:seed": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed.ts",
+    "db:seed-users": "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed-users.ts",
+    "db:seed-data":  "ts-node --compiler-options '{\"module\":\"CommonJS\"}' prisma/seed-data.ts"
+  },
+  "dependencies": {
+    "@prisma/client": "^5.22.0",
+    "@supabase/ssr": "^0.10.3",
+    "@supabase/supabase-js": "^2.106.2",
+    "autoprefixer": "^10.5.0",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.17.0",
+    "next": "^14.2.0",
+    "postcss": "^8.5.15",
+    "react": "^18.3.0",
+    "react-dom": "^18.3.0",
+    "tailwind-merge": "^3.6.0",
+    "tailwindcss": "^3.4.19",
+    "zod": "^3.23.8"
+  },
+  "devDependencies": {
+    "@types/dotenv": "^6.1.1",
+    "@types/node": "^20.16.0",
+    "@types/react": "^18.3.0",
+    "dotenv": "^17.4.2",
+    "prisma": "^5.22.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.5.0"
+  }
+}

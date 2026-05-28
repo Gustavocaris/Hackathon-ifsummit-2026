@@ -1,0 +1,4 @@
+joao@lab.com - 123456
+lucas@lab.com - 123456
+tecnico@lab.com - 123456
+admin@lab.com - 123456
