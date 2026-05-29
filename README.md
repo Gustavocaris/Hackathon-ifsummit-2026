@@ -1,9 +1,22 @@
+<h1 align="center">
+  Team Bugados
+</h1>
+<p align="center">
+  <img src="https://img.shields.io/badge/Team-Bugados-red">
+  <img alt="Version: 1.0" src="https://img.shields.io/badge/version-1.0-yellowgreen">
+  <img src="https://img.shields.io/badge/Acessar-Repositório-black?logo=github" alt="GitHub">
+  <img src="https://img.shields.io/badge/IF-PR-green">
+</p>
+
 <p align="center">
   <img src="https://github.com/user-attachments/assets/251a2125-6d35-4c30-a4fd-7204156096bd" width="45%" />
   <img src="https://github.com/user-attachments/assets/0cb90bfd-b771-4a38-b44d-5c2ab828ad01" width="45%" />
 </p>
 
-# IFSlot — Sistema de Gestão de Laboratórios
+
+<h1 align="center">
+  IFSlot — Sistema de Gestão de Laboratórios
+</h1>
 
 > Plataforma digital para reserva e gestão de laboratórios de química e biologia do Instituto Federal do Paraná — Campus Cascavel.
 
